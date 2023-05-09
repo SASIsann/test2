@@ -1,0 +1,33 @@
+/* styles.css */
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+#registration-form {
+    width: 300px;
+    margin: 0 auto;
+}
+
+.input-field {
+    margin-bottom: 10px;
+}
+
+.input-field input {
+    width: 100%;
+    padding: 5px;
+}
+
+#password-strength {
+    color: red;
+}
+
+#2fa-setup-form {
+    width: 300px;
+    margin: 0 auto;
+}
+
+#share-experiment-form {
+    width: 300px;
+    margin: 0 auto;
+}
