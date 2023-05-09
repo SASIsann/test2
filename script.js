@@ -1,43 +1,39 @@
 // script.js
+let tasks = [];
+let archivedTasks = [];
 
-// Registration form
-document.getElementById('registration-form').addEventListener('submit', function(event) {
-    event.preventDefault();
-
-    var username = document.getElementById('username').value;
-    var password = document.getElementById('password').value;
-
-    // TODO: Implement form validation and secure password storage
-
-    // TODO: Implement user registration with the server
+document.getElementById('add-task').addEventListener('click', function() {
+    const taskInput = document.getElementById('task-input');
+    if (taskInput.value) {
+        tasks.push(taskInput.value);
+        taskInput.value = '';
+        renderTasks();
+    }
 });
 
-// Password strength checker
-document.getElementById('password').addEventListener('input', function(event) {
-    var password = event.target.value;
+function renderTasks() {
+    const tasksContainer = document.getElementById('current-tasks');
+    tasksContainer.innerHTML = '';
+    tasks.forEach(function(task, index) {
+        const taskElement = document.createElement('div');
+        taskElement.innerText = task;
+        taskElement.addEventListener('click', function() {
+            archivedTasks.push(task);
+            tasks.splice(index, 1);
+            renderTasks();
+            renderArchivedTasks();
+        });
+        tasksContainer.appendChild(taskElement);
+    });
+}
 
-    // TODO: Implement password strength checking logic
-});
+function renderArchivedTasks() {
+    const archivedTasksContainer = document.getElementById('archived-tasks');
+    archivedTasksContainer.innerHTML = '';
+    archivedTasks.forEach(function(task) {
+        const taskElement = document.createElement('div');
+        taskElement.innerText = task;
+        archivedTasksContainer.appendChild(taskElement);
+    });
+}
 
-// Two-factor authentication setup
-document.getElementById('2fa-setup-form').addEventListener('submit', function(event) {
-    event.preventDefault();
-
-    var phoneNumber = document.getElementById('phone-number').value;
-
-    // TODO: Implement two-factor authentication setup with the server
-});
-
-// Delay unnecessary JavaScript execution
-window.addEventListener('load', function() {
-    // TODO: Delay the execution of JavaScript that isn't needed for the initial page load
-});
-
-// Community feature
-document.getElementById('share-experiment-form').addEventListener('submit', function(event) {
-    event.preventDefault();
-
-    var experimentId = document.getElementById('experiment-id').value;
-
-    // TODO: Implement experiment sharing with the community
-});
