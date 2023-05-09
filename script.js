@@ -5,79 +5,20 @@ let archivedTasks = [];
 document.getElementById('add-task').addEventListener('click', function() {
     const taskInput = document.getElementById('task-input');
     if (taskInput.value) {
-        tasks.push({ name: taskInput.value, completed: false });
+        tasks.push(taskInput.value);
         taskInput.value = '';
         renderTasks();
     }
 });
 
-function renderTasks() {
-    const tasksContainer = document.getElementById('current-tasks');
-    tasksContainer.innerHTML = '';
-    tasks.forEach(function(task, index) {
-        const taskElement = document.createElement('div');
-        taskElement.innerText = task.name;
-
-        // Delete button
-        const deleteButton = document.createElement('button');
-        deleteButton.innerText = 'Delete';
-        deleteButton.addEventListener('click', function(event) {
-            tasks.splice(index, 1);
-            renderTasks();
-            event.stopPropagation();  // Prevent the click from reaching the task element
-        });
-
-        // Move up button
-        const moveUpButton = document.createElement('button');
-        moveUpButton.innerText = 'Move Up';
-        moveUpButton.addEventListener('click', function(event) {
-            if (index > 0) {
-                const temp = tasks[index];
-                tasks[index] = tasks[index - 1];
-                tasks[index - 1] = temp;
-                renderTasks();
-            }
-            event.stopPropagation();  // Prevent the click from reaching the task element
-        });
-
-        // Move down button
-        const moveDownButton = document.createElement('button');
-        moveDownButton.innerText = 'Move Down';
-        moveDownButton.addEventListener('click', function(event) {
-            if (index < tasks.length - 1) {
-                const temp = tasks[index];
-                tasks[index] = tasks[index + 1];
-                tasks[index + 1] = temp;
-                renderTasks();
-            }
-            event.stopPropagation();  // Prevent the click from reaching the task element
-        });
-
-        taskElement.appendChild(deleteButton);
-        taskElement.appendChild(moveUpButton);
-        taskElement.appendChild(moveDownButton);
-
-        tasksContainer.appendChild(taskElement);
-    });
-}
-
-function renderArchivedTasks() {
-    // Same as before
-}
-
-// script.js
-// ...previous code...
-
-// Add an event listener for theme selection
-document.getElementById('theme').addEventListener('change', function() {
-    const theme = this.value;
-    document.body.className = theme;
+document.getElementById('light-mode-button').addEventListener('click', function() {
+    document.body.className = 'light-mode';
 });
 
-// script.js
-// ...previous code...
+document.getElementById('dark-mode-button').addEventListener('click', function() {
+    document.body.className = 'dark-mode';
+});
 
-// Add an event listener for template selection
 document.getElementById('template').addEventListener('change', function() {
     const template = this.value;
     const taskInput = document.getElementById('task-input');
@@ -90,7 +31,34 @@ document.getElementById('template').addEventListener('change', function() {
     }
 });
 
-// Function to update the current time task display
+function renderTasks() {
+    const tasksContainer = document.getElementById('current-tasks');
+    tasksContainer.innerHTML = '';
+    tasks.forEach(function(task, index) {
+        const taskElement = document.createElement('div');
+        taskElement.innerText = task;
+        taskElement.addEventListener('click', function() {
+            archivedTasks.push(task);
+            tasks.splice(index, 1);
+            renderTasks();
+            renderArchivedTasks();
+        });
+        tasksContainer.appendChild(taskElement);
+    });
+}
+
+function renderArchivedTasks() {
+    const archivedTasksContainer = document.getElementById('archived-tasks');
+    archivedTasksContainer.innerHTML = '';
+    archivedTasks.forEach(function(task) {
+        const taskElement = document.createElement('div');
+        taskElement.innerText =
+        const taskElement = document.createElement('div');
+        taskElement.innerText = task;
+        archivedTasksContainer.appendChild(taskElement);
+    });
+}
+
 function updateCurrentTimeTask() {
     const currentTimeTaskDisplay = document.getElementById('current-time-task');
     const now = new Date();
