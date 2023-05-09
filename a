@@ -1,34 +1,28 @@
-/* 基本スタイル */
-body {
-  font-family: 'Noto Sans JP', sans-serif;
-  line-height: 1.6;
-}
+<!-- registration.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registration - 仮想実験ラボ</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>仮想実験ラボ</h1>
+    </header>
 
-/* ナビゲーション */
-nav {
-  display: flex;
-  justify-content: space-between;
-  padding: 1rem;
-}
+    <main>
+        <form id="registration-form">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username">
 
-nav ul {
-  display: flex;
-  list-style: none;
-}
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password">
 
-nav ul li {
-  margin-left: 1rem;
-}
+            <input type="submit" value="Register">
+        </form>
+    </main>
 
-/* セクション */
-section {
-  padding: 2rem;
-}
+    <script src="script.js"></script>
+</body>
+</html>
 
-/* フッター */
-footer {
-  background-color: #333;
-  color: #fff;
-  padding: 1rem;
-  text-align: center;
-}
