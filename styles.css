@@ -17,3 +17,16 @@ body {
     padding-top: 20px;
 }
 
+
+body.light {
+    background-color: #fff;
+    color: #000;
+}
+
+body.dark {
+    background-color: #000;
+    color: #fff;
+}
+
+/* ...previous code... */
+
