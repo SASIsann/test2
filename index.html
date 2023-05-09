@@ -1,25 +1,55 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Task Scheduler</title>
+    <title>タスクスケジューラ</title>
     <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
     <div id="app">
-        <h1>Task Scheduler</h1>
-        <div id="current-time"></div>
+        <h1>タスクスケジューラ</h1>
+        <div class="theme-selection">
+            <label for="theme">テーマ:</label>
+            <select id="theme">
+                <option value="light">ライト</option>
+                <option value="dark">ダーク</option>
+            </select>
+        </div>
         <div class="task-input">
-            <input type="text" id="task-input" placeholder="Enter a new task...">
-            <input type="time" id="task-start-time" placeholder="Start time">
-            <input type="time" id="task-end-time" placeholder="End time">
-            <button id="add-task">Add Task</button>
+            <input type="text" id="task-input" placeholder="新しいタスクを入力...">
+            <button id="add-task">タスクを追加</button>
         </div>
         <div class="task-list">
-            <h2>Current Tasks</h2>
+            <h2>現在のタスク</h2>
             <div id="current-tasks"></div>
-            <h2>Archived Tasks</h2>
+            <h2>アーカイブされたタスク</h2>
             <div id="archived-tasks"></div>
         </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>タスクスケジューラ</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+    <div id="app">
+        <h1>タスクスケジューラ</h1>
+        <!-- Add a template selection -->
+        <div class="template-selection">
+            <label for="template">テンプレート:</label>
+            <select id="template">
+                <option value="">選択してください</option>
+                <option value="template1">テンプレート1</option>
+                <option value="template2">テンプレート2</option>
+            </select>
+        </div>
+        <!-- Add a current time task display -->
+        <h2 id="current-time-task">現在のタスク: なし</h2>
+        <!-- ...previous code... -->
     </div>
     <script src="script.js"></script>
 </body>
