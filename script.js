@@ -1,13 +1,15 @@
 // script.js
 let tasks = [];
 let archivedTasks = [];
+let taskId = 0;
 
 document.getElementById('add-task').addEventListener('click', function() {
     const taskInput = document.getElementById('task-input');
     if (taskInput.value) {
-        tasks.push(taskInput.value);
+        tasks.push({ id: taskId++, name: taskInput.value });
         taskInput.value = '';
         renderTasks();
+        updateCurrentTimeTask();
     }
 });
 
@@ -32,39 +34,35 @@ document.getElementById('template').addEventListener('change', function() {
 });
 
 function renderTasks() {
-    const tasksContainer = document.getElementById('current-tasks');
-    tasksContainer.innerHTML = '';
-    tasks.forEach(function(task, index) {
-        const taskElement = document.createElement('div');
-        taskElement.innerText = task;
-        taskElement.addEventListener('click', function() {
-            archivedTasks.push(task);
-            tasks.splice(index, 1);
-            renderTasks();
-            renderArchivedTasks();
-        });
-        tasksContainer.appendChild(taskElement);
-    });
+    renderTaskList(tasks, document.getElementById('current-tasks'), true);
 }
 
 function renderArchivedTasks() {
-    const archivedTasksContainer = document.getElementById('archived-tasks');
-    archivedTasksContainer.innerHTML = '';
-    archivedTasks.forEach(function(task) {
+    renderTaskList(archivedTasks, document.getElementById('archived-tasks'), false);
+}
+
+function renderTaskList(taskList, container, isCurrentTask) {
+    container.innerHTML = '';
+    taskList.forEach(function(task) {
         const taskElement = document.createElement('div');
-        taskElement.innerText =
-        const taskElement = document.createElement('div');
-        taskElement.innerText = task;
-        archivedTasksContainer.appendChild(taskElement);
+        taskElement.innerText = task.name;
+        if (isCurrentTask) {
+            taskElement.addEventListener('click', function() {
+                archivedTasks.push(task);
+                tasks = tasks.filter(t => t.id !== task.id);
+                renderTasks();
+                renderArchivedTasks();
+            });
+        }
+        container.appendChild(taskElement);
     });
 }
 
 function updateCurrentTimeTask() {
     const currentTimeTaskDisplay = document.getElementById('current-time-task');
-    const now = new Date();
-    const currentTask = tasks.find(task => /* condition based on the task time */);
+    const currentTask = tasks[0]; // ここでは最初のタスクを現在のタスクとしています
     if (currentTask) {
-        currentTimeTaskDisplay.textContent = '現在のタスク: ' + currentTask;
+        currentTimeTaskDisplay.textContent = '現在のタスク: ' + currentTask.name;
     } else {
         currentTimeTaskDisplay.textContent = '現在のタスク: なし';
     }
@@ -73,3 +71,4 @@ function updateCurrentTimeTask() {
 // Call the function initially and every minute
 updateCurrentTimeTask();
 setInterval(updateCurrentTimeTask, 60 * 1000);
+
