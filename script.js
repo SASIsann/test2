@@ -1,19 +1,12 @@
+// script.js
 let tasks = [];
 let archivedTasks = [];
 
 document.getElementById('add-task').addEventListener('click', function() {
     const taskInput = document.getElementById('task-input');
-    const taskStartTime = document.getElementById('task-start-time');
-    const taskEndTime = document.getElementById('task-end-time');
     if (taskInput.value) {
-        tasks.push({
-            title: taskInput.value,
-            startTime: taskStartTime.value,
-            endTime: taskEndTime.value,
-        });
+        tasks.push({ name: taskInput.value, completed: false });
         taskInput.value = '';
-        taskStartTime.value = '';
-        taskEndTime.value = '';
         renderTasks();
     }
 });
@@ -23,34 +16,92 @@ function renderTasks() {
     tasksContainer.innerHTML = '';
     tasks.forEach(function(task, index) {
         const taskElement = document.createElement('div');
-        taskElement.innerText = `${task.title} (${task.startTime} - ${task.endTime})`;
-        taskElement.addEventListener('click', function() {
-            archivedTasks.push(task);
+        taskElement.innerText = task.name;
+
+        // Delete button
+        const deleteButton = document.createElement('button');
+        deleteButton.innerText = 'Delete';
+        deleteButton.addEventListener('click', function(event) {
             tasks.splice(index, 1);
             renderTasks();
-            renderArchivedTasks();
+            event.stopPropagation();  // Prevent the click from reaching the task element
         });
+
+        // Move up button
+        const moveUpButton = document.createElement('button');
+        moveUpButton.innerText = 'Move Up';
+        moveUpButton.addEventListener('click', function(event) {
+            if (index > 0) {
+                const temp = tasks[index];
+                tasks[index] = tasks[index - 1];
+                tasks[index - 1] = temp;
+                renderTasks();
+            }
+            event.stopPropagation();  // Prevent the click from reaching the task element
+        });
+
+        // Move down button
+        const moveDownButton = document.createElement('button');
+        moveDownButton.innerText = 'Move Down';
+        moveDownButton.addEventListener('click', function(event) {
+            if (index < tasks.length - 1) {
+                const temp = tasks[index];
+                tasks[index] = tasks[index + 1];
+                tasks[index + 1] = temp;
+                renderTasks();
+            }
+            event.stopPropagation();  // Prevent the click from reaching the task element
+        });
+
+        taskElement.appendChild(deleteButton);
+        taskElement.appendChild(moveUpButton);
+        taskElement.appendChild(moveDownButton);
+
         tasksContainer.appendChild(taskElement);
     });
 }
 
 function renderArchivedTasks() {
-    const archivedTasksContainer = document.getElementById('archived-tasks');
-    archivedTasksContainer.innerHTML = '';
-    archivedTasks.forEach(function(task) {
-        const taskElement = document.createElement('div');
-        taskElement.innerText = `${task.title} (${task.startTime} - ${task.endTime})`;
-        archivedTasksContainer.appendChild(taskElement);
-    });
+    // Same as before
 }
 
-function displayCurrentTime() {
+// script.js
+// ...previous code...
+
+// Add an event listener for theme selection
+document.getElementById('theme').addEventListener('change', function() {
+    const theme = this.value;
+    document.body.className = theme;
+});
+
+// script.js
+// ...previous code...
+
+// Add an event listener for template selection
+document.getElementById('template').addEventListener('change', function() {
+    const template = this.value;
+    const taskInput = document.getElementById('task-input');
+    if (template === 'template1') {
+        taskInput.value = 'テンプレート1のタスク';
+    } else if (template === 'template2') {
+        taskInput.value = 'テンプレート2のタスク';
+    } else {
+        taskInput.value = '';
+    }
+});
+
+// Function to update the current time task display
+function updateCurrentTimeTask() {
+    const currentTimeTaskDisplay = document.getElementById('current-time-task');
     const now = new Date();
-    const hours = now.getHours().toString().padStart(2, '0');
-    const minutes = now.getMinutes().toString().padStart(2, '0');
-    const seconds = now.getSeconds().toString().padStart(2, '0');
-    document.getElementById('current-time').innerText = `${hours}:${minutes}:${seconds}`;
+    const currentTask = tasks.find(task => /* condition based on the task time */);
+    if (currentTask) {
+        currentTimeTaskDisplay.textContent = '現在のタスク: ' + currentTask;
+    } else {
+        currentTimeTaskDisplay.textContent = '現在のタスク: なし';
+    }
 }
 
-setInterval(displayCurrentTime, 1000);
-
+// Call the function initially and every minute
+updateCurrentTimeTask();
+setInterval(updateCurrentTimeTask, 60 * 1000);
