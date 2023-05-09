@@ -4,18 +4,24 @@
     <title>タスクスケジューラ</title>
     <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
-<body>
+<body class="light-mode">
     <div id="app">
         <h1>タスクスケジューラ</h1>
-        <div class="theme-selection">
-            <label for="theme">テーマ:</label>
-            <select id="theme">
-                <option value="light">ライト</option>
-                <option value="dark">ダーク</option>
+        <div class="theme-switch">
+            <button id="light-mode-button">ライトモード</button>
+            <button id="dark-mode-button">ダークモード</button>
+        </div>
+        <div class="template-selection">
+            <label for="template">テンプレート:</label>
+            <select id="template">
+                <option value="">選択してください</option>
+                <option value="template1">テンプレート1</option>
+                <option value="template2">テンプレート2</option>
             </select>
         </div>
+        <h2 id="current-time-task">現在のタスク: なし</h2>
         <div class="task-input">
-            <input type="text" id="task-input" placeholder="新しいタスクを入力...">
+            <input type="text" id="task-input" placeholder="新しいタスクを入力してください...">
             <button id="add-task">タスクを追加</button>
         </div>
         <div class="task-list">
@@ -29,29 +35,4 @@
 </body>
 </html>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>タスクスケジューラ</title>
-    <link rel="stylesheet" type="text/css" href="styles.css">
-</head>
-<body>
-    <div id="app">
-        <h1>タスクスケジューラ</h1>
-        <!-- Add a template selection -->
-        <div class="template-selection">
-            <label for="template">テンプレート:</label>
-            <select id="template">
-                <option value="">選択してください</option>
-                <option value="template1">テンプレート1</option>
-                <option value="template2">テンプレート2</option>
-            </select>
-        </div>
-        <!-- Add a current time task display -->
-        <h2 id="current-time-task">現在のタスク: なし</h2>
-        <!-- ...previous code... -->
-    </div>
-    <script src="script.js"></script>
-</body>
-</html>
 
